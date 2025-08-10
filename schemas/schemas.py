@@ -2,9 +2,18 @@
 
 # ✅ Pydantic is used for input validation and schema generation.
 from pydantic import BaseModel
+
 class SubtractInput(BaseModel):
     a: int
     b: int
+
+class MathOutput(BaseModel):
+    isMath:bool
+    reason:str
+
+class Guardrail_Output(BaseModel):
+    is_querry_about_hotel_laurel:bool
+    reason:str
 # 🔸 Pydantic validates input data at runtime and throws clear errors.
 # 🔸 It can also serialize/deserialize and generate OpenAPI/JSON schema — required by tools.
 
