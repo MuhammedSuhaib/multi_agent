@@ -252,10 +252,14 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "openai-agents" },
+    { name = "pydantic" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "openai-agents", specifier = ">=0.2.5" }]
+requires-dist = [
+    { name = "openai-agents", specifier = ">=0.2.5" },
+    { name = "pydantic", specifier = ">=2.11.7" },
+]
 
 [[package]]
 name = "openai"
