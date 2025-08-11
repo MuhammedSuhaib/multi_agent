@@ -1,6 +1,6 @@
 # main.py
 from agents import Runner,SQLiteSession,set_tracing_export_api_key,trace
-from simple_agents.agents import Triage_Agent
+from simple_agents.aagents import Triage_Agent
 from openai.types.responses import ResponseTextDeltaEvent
 import asyncio
 import os
@@ -12,7 +12,7 @@ Tracing_key = os.getenv('Tracing_key')
 session = SQLiteSession("Multi_Agent01", "multi_agent.db")
 async def main():
     set_tracing_export_api_key(Tracing_key)
-    with trace(Workflow_name="Multi_Agents"): 
+    with trace(workflow_name="Multi_Agents"): 
         # output = await Runner.run(starting_agent=Triage_Agent, input=input("User: "))      # Runner.Run
         output =  Runner.run_streamed(starting_agent=Triage_Agent, input=input("User: "),session=session)
         async for event in output.stream_events():
