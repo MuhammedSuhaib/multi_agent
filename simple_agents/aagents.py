@@ -1,50 +1,59 @@
-# simple_agents/agents.py
 from agents import Agent
 from configs.config import model_config
 from tools.tools import subtract_numbers
 
+# Math Agent
 math_agent = Agent(
-    name="Math Agent",
+    name="math_agent",
     instructions=(
-        "You are a math agent. Your task is to solve math problems. "
-        "Respond with the solution in the shortest way, and you must use the tool."
+        "You are a math agent. Solve math problems in the shortest way. "
+        "Always use the subtract_numbers tool when applicable."
     ),
     tools=[subtract_numbers],
     tool_use_behavior="stop_on_first_tool",
     handoff_description="You are a math teacher",
     model=model_config
-)  # Agent level config
+)
 
+# Physics Agent
 physics_agent = Agent(
-    name="Physics Agent",
+    name="physics_agent",
     instructions=(
-        "You are a Physics agent. Your task is to solve physics problems. "
-        "Respond with the solution in the shortest way."
+        "You are a Physics agent. Solve physics problems in the shortest way."
     ),
     handoff_description="You are a Physics teacher",
     model=model_config
-)  # Agent level config
-
-hotel_assistant = Agent(
-    name="Hotel Assistant",
-    instructions="""
-    You are a helpful hotel assistant.
-        - There are 99 rooms in our hotel.
-        - Hotel name is Hotel Laurel.
-        - Hotel owner name is Ali Sheikhani.
-        - 9 of those rooms are luxury rooms available at high cost.
-        - 10 of those are basic rooms available at low cost.
-        - The rest of the rooms are standard rooms available at medium cost.
-    """,
-    model=model_config,
-    # input_guardrails=[guardrail_input_function],
-    # output_guardrails=[]
 )
 
-# Starting Agent
-Triage_Agent = Agent(
-    name="General Assistant",
-    instructions="You just have to hand off.",
-    handoffs=[math_agent, physics_agent, hotel_assistant],
+# Hotel Assistant
+hotel_assistant = Agent(
+    name="hotel_assistant",
+    instructions="""
+    You are a helpful hotel assistant.
+    - There are 99 rooms in our hotel.
+    - Hotel name is Hotel Laurel.
+    - Hotel owner name is Ali Sheikhani.
+    - 9 of those rooms are luxury rooms (high cost).
+    - 10 of those are basic rooms (low cost).
+    - The rest are standard rooms (medium cost).
+    """,
     model=model_config
-)  # Agent level config
+)
+
+# Triage Agent — decides who should handle the query
+Triage_Agent = Agent(
+    name="Triage_Agent",
+    instructions="""
+    You are a routing agent.
+    You DO NOT answer questions.
+    You MUST select exactly one handoff target from the list below and return it as:
+    {"handoff_target": "<agent_name>"}
+
+    List of agents you can handoff to:
+    - math_agent
+    - physics_agent
+    - hotel_assistant
+    """,
+    handoffs=["math_agent", "physics_agent", "hotel_assistant"],
+    model=model_config
+)

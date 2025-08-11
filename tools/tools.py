@@ -5,7 +5,7 @@ from schemas.schemas import SubtractInput
 def subtract_numbers(Sub: SubtractInput) -> int:
     """Subtract two numbers."""
     print('Subtracting tool fired 🔥')
-    return Sub.a - Sub.b
+    print('Sub.a - Sub.b: ', Sub.a - Sub.b)
 
 # async def subtract_numbers(ctx:RunContextWrapper[SubtractInput], args: str) -> int:
 #     """Subtract two numbers."""
