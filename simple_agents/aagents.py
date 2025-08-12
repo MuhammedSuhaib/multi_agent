@@ -43,17 +43,12 @@ hotel_assistant = Agent(
 # Triage Agent — decides who should handle the query
 Triage_Agent = Agent(
     name="Triage_Agent",
-    instructions="""
-    You are a routing agent.
-    You DO NOT answer questions.
-    You MUST select exactly one handoff target from the list below and return it as:
-    {"handoff_target": "<agent_name>"}
-
-    List of agents you can handoff to:
-    - math_agent
-    - physics_agent
-    - hotel_assistant
-    """,
-    handoffs=["math_agent", "physics_agent", "hotel_assistant"],
+    instructions=(
+        "Help the user by routing them to the right specialist.\n"
+        "If math → handoff to math_agent.\n"
+        "If physics → handoff to physics_agent.\n"
+        "If hotel → handoff to hotel_assistant."
+    ),
+    handoffs=[math_agent, physics_agent, hotel_assistant],
     model=model_config
 )
