@@ -1,7 +1,7 @@
 from agents import Agent
 from configs.config import model_config
 from tools.tools import subtract_numbers
-
+from guardrail.guardrail import guardrail_input_function
 # Math Agent
 math_agent = Agent(
     name="math_agent",
@@ -37,7 +37,8 @@ hotel_assistant = Agent(
     - 10 of those are basic rooms (low cost).
     - The rest are standard rooms (medium cost).
     """,
-    model=model_config
+    model=model_config,
+    input_guardrails=[guardrail_input_function]
 )
 
 # Triage Agent — decides who should handle the query

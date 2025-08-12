@@ -7,10 +7,6 @@ class SubtractInput(BaseModel):
     a: int
     b: int
 
-class MathOutput(BaseModel):
-    isMath:bool
-    reason:str
-
 class Guardrail_Output(BaseModel):
     is_querry_about_hotel_laurel:bool
     reason:str

@@ -1,6 +1,7 @@
-from agents import Runner, set_tracing_export_api_key
-from simple_agents.aagents import Triage_Agent
+from agents import Runner, set_tracing_export_api_key,trace
+from simple_agents.aagents import Triage_Agent,hotel_assistant
 from openai.types.responses import ResponseTextDeltaEvent
+from agents.exceptions import InputGuardrailTripwireTriggered
 import asyncio
 import os
 from dotenv import load_dotenv
@@ -11,17 +12,21 @@ Tracing_key = os.getenv('Tracing_key')
 async def main():
     set_tracing_export_api_key(Tracing_key)
 
-    with trace(workflow_name="Multi_Agents"): 
-        while True:
-            try:
-                user_query = input("\nUser: ")
-            except EOFError:
-                break
+    with trace(workflow_name="Guardrail_Agents",disabled=False): 
+        try:
+            while True:
+                try:
+                    user_query = input("\nUser: ")
+                except EOFError:
+                    break
 
-            # Now triage_agent already knows its handoff targets
-            output = Runner.run_streamed(starting_agent=Triage_Agent, input=user_query)
-            async for event in output.stream_events():
-                if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
-                    print(event.data.delta, end="", flush=True)
+                # Now triage_agent already knows its handoff targets
+                output = await Runner.run(starting_agent=hotel_assistant, input=user_query)
+                print(output.final_output)
+                # async for event in output.stream_events():
+                #     if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
+                #         print(event.data.delta, end="", flush=True)
+        except InputGuardrailTripwireTriggered as e:
+            print("Guardrail blocked this input:", e)
 
 asyncio.run(main())
