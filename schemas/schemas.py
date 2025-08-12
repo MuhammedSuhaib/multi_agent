@@ -9,6 +9,7 @@ class SubtractInput(BaseModel):
 
 class Guardrail_Output(BaseModel):
     is_querry_about_hotel_laurel:bool
+    is_querry_related_to_account_and_tax_of_hotel_laurel:bool
     reason:str
 # 🔸 Pydantic validates input data at runtime and throws clear errors.
 # 🔸 It can also serialize/deserialize and generate OpenAPI/JSON schema — required by tools.

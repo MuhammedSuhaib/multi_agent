@@ -1,7 +1,8 @@
 from agents import Runner, set_tracing_export_api_key,trace
 from simple_agents.aagents import Triage_Agent,hotel_assistant
 from openai.types.responses import ResponseTextDeltaEvent
-from agents.exceptions import InputGuardrailTripwireTriggered
+from guardrail.guardrail import guardrail_agent
+from agents.exceptions import InputGuardrailTripwireTriggered,OutputGuardrailTripwireTriggered
 import asyncio
 import os
 from dotenv import load_dotenv
@@ -27,6 +28,12 @@ async def main():
                 #     if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
                 #         print(event.data.delta, end="", flush=True)
         except InputGuardrailTripwireTriggered as e:
-            print("Guardrail blocked this input:", e)
+            print("Guardrail blocked this input:🔺", e)
+        
+        except OutputGuardrailTripwireTriggered as e:
+            print("Guardrail blocked this output:🔺", e)
+
+
+
 
 asyncio.run(main())
