@@ -2,6 +2,7 @@ from agents import Agent
 from configs.config import model_config
 from tools.tools import subtract_numbers
 from guardrail.guardrail import guardrail_input_function,guardrail_output_function
+
 # Math Agent
 math_agent = Agent(
     name="math_agent",
@@ -16,17 +17,16 @@ math_agent = Agent(
 )
 
 # Physics Agent
-physics_agent = Agent(
+physics_agent = math_agent.clone(
     name="physics_agent",
     instructions=(
         "You are a Physics agent. Solve physics problems in the shortest way."
     ),
     handoff_description="You are a Physics teacher",
-    model=model_config
 )
 
 # Hotel Assistant
-hotel_assistant = Agent(
+hotel_assistant = math_agent.clone(
     name="hotel_assistant",
     instructions="""
     You are a helpful hotel assistant.
@@ -37,13 +37,12 @@ hotel_assistant = Agent(
     - 10 of those are basic rooms (low cost).
     - The rest are standard rooms (medium cost).
     """,
-    model=model_config,
     input_guardrails=[guardrail_input_function],
     output_guardrails=[guardrail_output_function],
 )
 
 # Triage Agent — decides who should handle the query
-Triage_Agent = Agent(
+Triage_Agent = math_agent.clone(
     name="Triage_Agent",
     instructions=(
         "Help the user by routing them to the right specialist.\n"
@@ -52,5 +51,4 @@ Triage_Agent = Agent(
         "If hotel → handoff to hotel_assistant."
     ),
     handoffs=[math_agent, physics_agent, hotel_assistant],
-    model=model_config
 )
