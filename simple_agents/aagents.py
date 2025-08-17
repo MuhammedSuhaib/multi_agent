@@ -1,4 +1,5 @@
-from agents import Agent
+from agents import Agent,WebSearchTool,FileSearchTool,StopAtTools
+
 from configs.config import model_config
 from tools.tools import subtract_numbers
 from guardrail.guardrail import guardrail_input_function,guardrail_output_function
@@ -11,6 +12,7 @@ math_agent = Agent(
         "Always use the subtract_numbers tool when applicable."
     ),
     tools=[subtract_numbers],
+    # tool_use_behavior=StopAtTools(['subtract_numbers','']),
     tool_use_behavior="stop_on_first_tool",
     handoff_description="You are a math teacher",
     model=model_config
@@ -39,6 +41,16 @@ hotel_assistant = math_agent.clone(
     """,
     input_guardrails=[guardrail_input_function],
     output_guardrails=[guardrail_output_function],
+    tools=[
+        WebSearchTool(),
+        FileSearchTool(
+            vector_store_ids='',
+            max_num_results=0,
+            include_search_results=False,#????????
+            ranking_options=None,#???????????
+            ),
+    ]
+
 )
 
 # Triage Agent — decides who should handle the query

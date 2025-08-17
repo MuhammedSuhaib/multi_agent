@@ -93,7 +93,7 @@ def dynamic_instructions(context: RunContextWrapper, agent: Agent) -> str:
 
 agent = Agent(
     name="Test_Agent",
-    instructions=dynamic_instructions,
+    instructions=dynamic_instructions,#can be str func / callable class etc 
     tools=[subtract_numbers],
     hooks=MyHooks(),
     model=model_config,
