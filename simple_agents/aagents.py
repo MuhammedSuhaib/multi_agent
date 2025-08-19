@@ -1,4 +1,4 @@
-from agents import Agent,WebSearchTool,FileSearchTool,StopAtTools
+from agents import Agent, ModelSettings,WebSearchTool,FileSearchTool,StopAtTools
 
 from configs.config import model_config
 from tools.tools import subtract_numbers
@@ -9,13 +9,14 @@ math_agent = Agent(
     name="math_agent",
     instructions=(
         "You are a math agent. Solve math problems in the shortest way. "
-        "Always use the subtract_numbers tool when applicable."
+        # "Always use the subtract_numbers tool when applicable."
     ),
     tools=[subtract_numbers],
     # tool_use_behavior=StopAtTools(['subtract_numbers','']),
     tool_use_behavior="stop_on_first_tool",
     handoff_description="You are a math teacher",
-    model=model_config
+    model=model_config,
+    # model_settings=ModelSettings(tool_choice=subtract_numbers,)  #optional
 )
 
 # Physics Agent
@@ -25,6 +26,7 @@ physics_agent = math_agent.clone(
         "You are a Physics agent. Solve physics problems in the shortest way."
     ),
     handoff_description="You are a Physics teacher",
+    model_settings=ModelSettings(max_tokens=10)  #optional
 )
 
 # Hotel Assistant

@@ -1,5 +1,5 @@
 from agents import Runner, set_tracing_export_api_key,trace
-from simple_agents.aagents import Triage_Agent,hotel_assistant,math_agent
+from simple_agents.aagents import Triage_Agent,hotel_assistant,math_agent,physics_agent
 from openai.types.responses import ResponseTextDeltaEvent
 from guardrail.guardrail import guardrail_agent
 from agents.exceptions import InputGuardrailTripwireTriggered,OutputGuardrailTripwireTriggered
@@ -22,7 +22,7 @@ async def main():
                     break
 
                 # Now triage_agent already knows its handoff targets
-                output = await Runner.run(starting_agent=math_agent, input=user_query)
+                output = await Runner.run(starting_agent=physics_agent, input=user_query)
                 print(output.final_output)
                 # async for event in output.stream_events():
                 #     if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):

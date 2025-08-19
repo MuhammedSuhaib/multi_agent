@@ -1,12 +1,25 @@
 - Quick pay
-- vector_store_id = [list of string]
-- temprature = how much detail / focus answer `ve to be
-- tool_choice is 'auto' by default when None
-- 'require' force llm to call function
-- 'none' force llm to avoid tool
-- what is odoo gen tool test ? Add a   goose??
-- failure error function that return a srting when any error encountered 
-- tool error is a kind of user error
-- ToolsToFinalOutputFunction ??
-./
-modelsettings>toolchoices>atuto,req,none,resettoolchoice,
+- failure error function that return a string when any error encountered
+- `/ = root` , `./ = current dir` , `\ = roof`  
+
+```py
+@dataclass
+class ToolsToFinalOutputResult:
+    is_final_output: bool
+    """Whether this is the final output. If False, the LLM will run again and receive the tool call
+    output.
+    """
+
+    final_output: Any | None = None
+    """The final output. Returns None if is_final_output is False; otherwise, it must match the agent's output_type.
+    """
+
+
+ToolsToFinalOutputFunction: TypeAlias = Callable[
+    [RunContextWrapper[TContext], list[FunctionToolResult]],
+    MaybeAwaitable[ToolsToFinalOutputResult],
+]
+"""A function that takes a run context and a list of tool results, and returns a
+`ToolsToFinalOutputResult`.
+"""
+```
