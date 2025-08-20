@@ -26,7 +26,6 @@ physics_agent = math_agent.clone(
         "You are a Physics agent. Solve physics problems in the shortest way."
     ),
     handoff_description="You are a Physics teacher",
-    model_settings=ModelSettings(max_tokens=10)  #optional
 )
 
 # Hotel Assistant

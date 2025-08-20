@@ -13,7 +13,7 @@ Tracing_key = os.getenv('Tracing_key')
 async def main():
     set_tracing_export_api_key(Tracing_key)
 
-    with trace(workflow_name="16-August",disabled=False): 
+    with trace(workflow_name="20-August",disabled=False): 
         try:
             while True:
                 try:
