@@ -1,7 +1,5 @@
 from agents import Runner, set_tracing_export_api_key,trace
-from simple_agents.aagents import Triage_Agent,hotel_assistant,math_agent,physics_agent
-from openai.types.responses import ResponseTextDeltaEvent
-from guardrail.guardrail import guardrail_agent
+from simple_agents.aagents import BotAgent
 from agents.exceptions import InputGuardrailTripwireTriggered,OutputGuardrailTripwireTriggered
 import asyncio
 import os
@@ -13,7 +11,7 @@ Tracing_key = os.getenv('Tracing_key')
 async def main():
     set_tracing_export_api_key(Tracing_key)
 
-    with trace(workflow_name="20-August",disabled=False): 
+    with trace(workflow_name="Assignment6",disabled=False): 
         try:
             while True:
                 try:
@@ -22,7 +20,12 @@ async def main():
                     break
 
                 # Now triage_agent already knows its handoff targets
-                output = await Runner.run(starting_agent=physics_agent, input=user_query)
+                output = await Runner.run(starting_agent=BotAgent, input=user_query)
+                # Logging tool invocations and handoffs
+                if hasattr(output, 'tool_invocations'):
+                    print("[LOG] Tool invocations:", output.tool_invocations)
+                if hasattr(output, 'handoff') and output.handoff:
+                    print(f"[LOG] Handoff to: {output.handoff}")
                 print(output.final_output)
                 # async for event in output.stream_events():
                 #     if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
