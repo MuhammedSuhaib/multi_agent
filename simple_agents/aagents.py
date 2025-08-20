@@ -22,5 +22,5 @@ BotAgent = Agent(
     output_guardrails=[guardrail_output_function],
     model=model_config,
     # Showcase usage of model_settings (tool_choice, metadata, etc.)
-    model_settings=ModelSettings(tool_choice="auto", metadata={"customer_id": "demo-1234"}),
+    model_settings=ModelSettings(tool_choice="auto"),
 )
