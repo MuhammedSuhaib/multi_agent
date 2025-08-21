@@ -17,13 +17,6 @@ def subtract_numbers(Sub: SubtractInput) -> int:
     return ("Sub.a - Sub.b: ", Sub.a - Sub.b)
 
 
-@function_tool(name_override="WebSearchTool", description_override="Search the web")
-def WebSearchTool(query: str) -> str:
-    """Search the web."""
-    print("WebSearchTool fired ==🔥")
-    return f"Results for '{query}': ..."
-
-
 # async def subtract_numbers(ctx:RunContextWrapper[SubtractInput], args: str) -> int:
 #     """Subtract two numbers."""
 #     print('Subtracting tool fired 🔥')

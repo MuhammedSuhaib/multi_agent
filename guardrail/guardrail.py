@@ -3,10 +3,9 @@ from schemas.schemas import Guardrail_Output
 from configs.config import model_config
 
 @input_guardrail
-async def guardrail_input_function(ctx: RunContextWrapper[None], agent: Agent, input: str | list[TResponseInputItem]
-) -> GuardrailFunctionOutput:
-    #               THIS runner runs the guardrail agent                   ↘       we apply context for futur use if we need it so...
-    result = await Runner.run(guardrail_agent,                       input=input, context=ctx.context)
+async def guardrail_input_function(ctx: RunContextWrapper[None], agent: Agent, input: str | list[TResponseInputItem])->GuardrailFunctionOutput:
+    #THIS runner runs the guardrail agent                               ⬇           ⬇               ↙For future use
+    result = await Runner.run(                                  guardrail_agent,input=input, context=ctx.context)
 #      ↘____________________________________
 #                                            ↘
     return GuardrailFunctionOutput(output_info=result.final_output,
