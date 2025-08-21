@@ -8,8 +8,8 @@ class SubtractInput(BaseModel):
     b: int
 
 class Guardrail_Output(BaseModel):
-    is_querry_about_hotel_laurel:bool
-    is_querry_related_to_account_and_tax_of_hotel_laurel:bool
+    is_querry_about_hotel:bool
+    is_querry_related_to_account_and_tax:bool
     reason:str
 
 class HotelContext(BaseModel):
