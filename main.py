@@ -1,4 +1,4 @@
-from agents import Runner, set_tracing_export_api_key,trace
+from agents import RunConfig, Runner, set_tracing_export_api_key,trace
 from schemas.schemas import HotelContext
 from simple_agents.aagents import Triage_Agent
 # from openai.types.responses import ResponseTextDeltaEvent
@@ -21,7 +21,7 @@ async def main():
                     break
 
                 # Now triage_agent already knows its handoff targets
-                output = await Runner.run(starting_agent=Triage_Agent, input=user_query)
+                output = await Runner.run(starting_agent=Triage_Agent, input=user_query,run_config=RunConfig())
                 print(output.final_output)
                 # async for event in output.stream_events():
                 #     if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):

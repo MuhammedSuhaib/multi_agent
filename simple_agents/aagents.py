@@ -16,7 +16,7 @@ math_agent = Agent(
     # tool_use_behavior="stop_on_first_tool",
     handoff_description="You are a math teacher",
     model=model_config,
-    # model_settings=ModelSettings(tool_choice='subtract_numbers',)  #optional
+    model_settings=ModelSettings(tool_choice='subtract_numbers',)  #optional
 )
 
 # Physics Agent
