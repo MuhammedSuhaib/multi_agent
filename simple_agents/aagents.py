@@ -1,9 +1,15 @@
-from agents import Agent, ModelSettings, RunContextWrapper, StopAtTools
+from agents import Agent, ModelSettings, RunContextWrapper, StopAtTools, handoff
+from agents.voice import VoicePipelineConfig
+from agents.tracing import TraceProvider
 from configs.config import model_config
 from dynamic_instructions import dynamic_instructions
 from tools.tools import subtract_numbers
 from guardrail.guardrail import guardrail_input_function, guardrail_output_function
-
+from agents.extensions import handoff_filters
+# --------------------my explore ground 
+ 
+VoicePipelineConfig()
+ 
 # Math Agent
 math_agent = Agent(
     name="math_agent",
@@ -35,6 +41,11 @@ hotel_assistant = math_agent.clone(
     output_guardrails=[guardrail_output_function],
 )
 
+handoff_obj = handoff(
+    agent=math_agent,
+    input_filter=handoff_filters.remove_all_tools, 
+)
+
 # Triage Agent — decides who should handle the query
 Triage_Agent = math_agent.clone(
     name="Triage_Agent",
@@ -44,5 +55,5 @@ Triage_Agent = math_agent.clone(
         "If physics → handoff to physics_agent.\n"
         "If hotel → handoff to hotel_assistant."
     ),
-    handoffs=[math_agent, physics_agent, hotel_assistant],
+    handoffs=[handoff_obj, physics_agent, hotel_assistant],
 )
