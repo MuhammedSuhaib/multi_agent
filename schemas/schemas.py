@@ -16,9 +16,11 @@ class HotelContext(BaseModel):
     hotel_name: str | None = None
 
 
-class UserInfo(BaseModel):
+class SomeDynamicInfo(BaseModel):
     name: str
     uid: int
+    agent: str
+
 # 🔸 Pydantic validates input data at runtime and throws clear errors.
 # 🔸 It can also serialize*/deserialize and generate OpenAPI/JSON schema — required by tools.
 
