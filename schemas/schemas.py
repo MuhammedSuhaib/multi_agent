@@ -14,8 +14,13 @@ class Guardrail_Output(BaseModel):
 
 class HotelContext(BaseModel):
     hotel_name: str | None = None
+
+
+class UserInfo(BaseModel):
+    name: str
+    uid: int
 # 🔸 Pydantic validates input data at runtime and throws clear errors.
-# 🔸 It can also serialize/deserialize and generate OpenAPI/JSON schema — required by tools.
+# 🔸 It can also serialize*/deserialize and generate OpenAPI/JSON schema — required by tools.
 
 # Dataclass provides basic structure but no validation.
 # from dataclasses import dataclass
@@ -27,3 +32,5 @@ class HotelContext(BaseModel):
 # 🔸 Dataclass is lightweight and useful for plain data containers,
 #     but it does not validate types at runtime or generate JSON schema.
 # 🔸 You'd have to manually check data types if using dataclass.
+
+# * converting an object's state or a data structure into a format that can be stored or transmitted.

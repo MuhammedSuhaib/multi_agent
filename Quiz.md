@@ -5,14 +5,14 @@
 Which AgentHooks method is called after the agent’s reasoning but before any **TOOL CALL**? 
 A. on_agent_start
 B. on_agent_action
-C. on_tool_start✅
+C. on_tool_start
 D. on_agent_end
-E. None of the above
+E. None of the above✅
 ---
 
 **2. AgentOutputSchemaBase**
 Which two methods must any `AgentOutputSchemaBase` subclass implement?
-A. `is_plain()` and `execute_tool()`
+A. `is_plain()` and `execute_tool()`✅
 B. `name()` and `execute_tool()`
 C. `json_schema()` and ` `is_plain()_text`✅
 D. .format_output() and parse_input()
