@@ -12,11 +12,8 @@ math_agent = Agent(
         "Always use the subtract_numbers tool when applicable."
     ),
     tools=[subtract_numbers],
-    # tool_use_behavior=StopAtTools(['subtract_numbers','']),
-    # tool_use_behavior="stop_on_first_tool",
     handoff_description="You are a math teacher",
     model=model_config,
-    # model_settings=ModelSettings(tool_choice='subtract_numbers',)  #optional
 )
 
 # Physics Agent
